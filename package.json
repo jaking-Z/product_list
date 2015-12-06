@@ -1,0 +1,30 @@
+{
+  "name": "product_list",
+  "version": "1.0.0",
+  "description": "用react实现的简单产品列表展示",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jaking-Z/product_list.git"
+  },
+  "author": "jaking",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jaking-Z/product_list/issues"
+  },
+  "homepage": "https://github.com/jaking-Z/product_list#readme",
+  "dependencies": {
+    "co-views": "^2.1.0",
+    "ejs": "^2.3.4",
+    "gulp": "^3.9.0",
+    "koa": "^1.1.2",
+    "koa-static": "^1.5.2",
+    "node-jsx": "^0.13.3",
+    "react": "^0.14.3",
+    "webpack": "^1.12.9",
+    "webpack-stream": "^2.3.0"
+  }
+}
