@@ -8,19 +8,22 @@ var app = koa();
 
 require('node-jsx').install();
 var React = require('react');
+var ReactDOMServer = require('react-dom/server');
 
-var reder = views(__dirname + '/views', {
+var render = views(__dirname + '/views', {
 	map: {html: 'ejs'}
 });
 
 app.use(serve(path.join(__dirname, 'public')));
 
 var list = [{name: 'product'}];
-app.use(fuction *(next){
-	this.body = yield reder('test', {root: React.rederToString(React.createElement(require('/c/main'),{product: list}))});
+app.use(function *(next){
+	this.body = yield render('index', {root: ReactDOMServer.renderToString(React.createElement(require('./c/main'),{product: list}))});
 })
 
 if (!module.parent) {
 	app.listen(3000);
 	console.log('listening on port 3000');
 };
+
+module.exports = app;
