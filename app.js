@@ -16,9 +16,10 @@ var render = views(__dirname + '/views', {
 
 app.use(serve(path.join(__dirname, 'public')));
 
-var list = [{name: 'product'}];
+var productList = require('./public/json/product_list').zh_cn;
+console.log(productList);
 app.use(function *(next){
-	this.body = yield render('index', {root: ReactDOMServer.renderToString(React.createElement(require('./c/main'),{product: list}))});
+	this.body = yield render('index', {root: ReactDOMServer.renderToString(React.createElement(require('./c/main'),{productList: productList}))});
 })
 
 if (!module.parent) {
