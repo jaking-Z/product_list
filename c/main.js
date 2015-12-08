@@ -5,15 +5,18 @@ var React = require('react');
 
 var Main = React.createClass({
     render: function() {
-        let list = this.props.productList.map(function(item) {
+        var list = this.props.productList.map(function(item) {
             return ( 
-            	<h1> {item.title} </h1>
+            	<li>
+	            	<span> {item.title} </span>
+	                <span> {item.price} </span>
+                </li>
             )
         });
         return (
-        	<div>
+        	<ul>
 	        	{list}
-	        </div>
+	        </ul>
         	)
     }
 });
