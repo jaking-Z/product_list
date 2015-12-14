@@ -6,8 +6,14 @@ var EnhancedButton = require('material-ui/lib/enhanced-button');
 var Paper = require('material-ui/lib/paper');
 var Tabs = require('material-ui/lib/tabs/tabs');
 var Tab = require('material-ui/lib/tabs/tab');
+var FullWidthSection = require('./full-width-section');
 
 var Master = React.createClass({
+	getInitialState: function(){
+		return {
+			tabIndex: 0
+		}
+	},
 	render: function(){
 		return (
 			<AppCanvas>
@@ -48,4 +54,6 @@ var Master = React.createClass({
 			</div>
 			);
 	}
-})
+});
+
+module.exports = Master;
