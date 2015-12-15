@@ -9,6 +9,8 @@ var FullWidthSection = React.createClass({
 			<ClearFix>
 				{this.props.children}
 			</ClearFix>
-			)
+			);
 	}
-})
+});
+
+module.exports = FullWidthSection;
