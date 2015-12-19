@@ -14,7 +14,7 @@ var Typography = Styles.Typography;
 var ThemeManager = Styles.ThemeManager;
 var DefaultRawTheme = Styles.LightRawTheme;
 var StylePropable = require('material-ui/lib/mixins').StylePropable;
-console.log(AppCanvas);
+
 var Master = React.createClass({
 	mixins: [StylePropable],
     getInitialState: function() {
@@ -22,6 +22,14 @@ var Master = React.createClass({
         return {
             tabIndex: '1',
             muiTheme: muiTheme
+        };
+    },
+    childContextTypes : {
+        muiTheme: React.PropTypes.object,
+    },
+    getChildContext: function() {
+        return {
+          muiTheme: this.state.muiTheme
         };
     },
     render: function() {

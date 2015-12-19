@@ -2,13 +2,14 @@
 
 var React = require('react');
 var Master = require('./components/master');
+var Home = require('./components/pages/home');
 
 var Main = React.createClass({
     render: function() {
         
         return (
         	<Master>
-                <div>hello world</div>
+                <Home></Home>
             </Master>
         	)
     }
