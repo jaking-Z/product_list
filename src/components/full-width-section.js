@@ -37,8 +37,8 @@ var FullWidthSection = React.createClass({
 		    paddingBottom: (DesktopGutter * 2) + 'px',
 		  },
 		  rootWhenLarge: {
-		    paddingTop: (DesktopGutter * 3) + 'px',
-		    paddingBottom: (DesktopGutter * 3) + 'px',
+		    paddingTop: (DesktopGutter * 2) + 'px',
+		    paddingBottom: (DesktopGutter * 2) + 'px',
 		  },
 		};
 	}

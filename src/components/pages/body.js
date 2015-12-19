@@ -18,7 +18,8 @@ var Body = React.createClass({
 	_getStyles: function(){
 		return {
 			root: {
-				paddingTop: Spacing.desktopKeylineIncrement + 'px'
+				paddingTop: Spacing.desktopKeylineIncrement + 'px',
+				minHeight: '497px'
 			}
 		}
 	}
