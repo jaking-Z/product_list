@@ -14,6 +14,8 @@ var Typography = Styles.Typography;
 var ThemeManager = Styles.ThemeManager;
 var DefaultRawTheme = Styles.LightRawTheme;
 var StylePropable = require('material-ui/lib/mixins').StylePropable;
+var jsonDatas = require('../../public/json/master');
+var jsonData = jsonDatas['zh_cn'];
 
 var Master = React.createClass({
 	mixins: [StylePropable],
@@ -91,8 +93,8 @@ var Master = React.createClass({
         };
         var productIcon = ( 
         	<EnhancedButton style={styles.svgLogoContainer} linkButton={true} href="/#/home">
-	            <img style={this.prepareStyles(styles.svgLogo)} src="/public/img/logo.png" />
-	            <span style={this.prepareStyles(styles.span)}> 产品名称 </span> 
+	            <img style={this.prepareStyles(styles.svgLogo)} src={jsonData.navLogo.img} />
+	            <span style={this.prepareStyles(styles.span)}> {jsonData.navLogo.title} </span> 
             </EnhancedButton>
         );
         return ( 
@@ -103,16 +105,16 @@ var Master = React.createClass({
                          inkBarStyle={styles.inkBarStyle}
 			             onChange={this._handleTabChange}>
 				            <Tab style={styles.tab} value="1"
-					             label="Home"
+					             label={jsonData.navHome.title}
 					             route="/home"/>
                             <Tab style={styles.tab} value="2"
-                                 label="Product"
+                                 label={jsonData.navProduct.title}
                                  route="/product"/>
                             <Tab style={styles.tab} value="3"
-                                 label="About"
+                                 label={jsonData.navAbout.title}
                                  route="/about"/>
                             <Tab style={styles.tab} value="4"
-                                 label="Home2"
+                                 label={jsonData.navHome.title}
                                  route="/home"/>
 			            </Tabs> 
 		            </div> 
