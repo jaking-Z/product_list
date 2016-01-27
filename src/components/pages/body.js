@@ -9,8 +9,9 @@ var Body = React.createClass({
 	 },
 	render: function(){
 		var styles = this._getStyles();
+		var style = this.props.style || {};
 		return (
-				<div style={this.prepareStyles(styles.root)}>
+				<div style={this.prepareStyles(styles.root, style)}>
 					{this.props.children}
 				</div>
 			);
@@ -19,7 +20,7 @@ var Body = React.createClass({
 		return {
 			root: {
 				paddingTop: Spacing.desktopKeylineIncrement + 'px',
-				minHeight: '497px'
+				minHeight: [(window.innerHeight && (window.innerHeight - 184) > 300 && (window.innerHeight - 184)) || 497, 'px'].join('')
 			}
 		}
 	}

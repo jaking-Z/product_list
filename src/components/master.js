@@ -62,10 +62,10 @@ var Master = React.createClass({
             span: {
                 color: Colors.white,
                 fontWeight: Typography.fontWeightLight,
-                left: 45,
+                left: 65,
                 top: 22,
                 position: 'absolute',
-                fontSize: 26,
+                fontSize: 26
             },
             svgLogoContainer: {
                 position: 'fixed',
@@ -75,24 +75,23 @@ var Master = React.createClass({
             svgLogo: {
                 width: 65,
                 backgroundColor: Colors.cyan500,
-                position: 'absolute',
-                top: 20,
+                position: 'absolute'
             },
             tabs: {
                 width: 425,
-                bottom: 0,
+                bottom: 0
             },
             inkBarStyle: {
-                backgroundColor: '#fff59d',
+                backgroundColor: Colors.yellow200
             },
             tab: {
-                height: 64,
+                height: 64
             }
 
         };
         var productIcon = ( 
         	<EnhancedButton style={styles.svgLogoContainer} linkButton={true} href="/#/home">
-	            <img style={this.prepareStyles(styles.svgLogo)} src="" />
+	            <img style={this.prepareStyles(styles.svgLogo)} src="/public/img/logo.png" />
 	            <span style={this.prepareStyles(styles.span)}> 产品名称 </span> 
             </EnhancedButton>
         );
@@ -107,14 +106,14 @@ var Master = React.createClass({
 					             label="Home"
 					             route="/home"/>
                             <Tab style={styles.tab} value="2"
+                                 label="Product"
+                                 route="/product"/>
+                            <Tab style={styles.tab} value="3"
+                                 label="About"
+                                 route="/about"/>
+                            <Tab style={styles.tab} value="4"
                                  label="Home2"
-                                 route=""/>
-                            <Tab style={styles.tab} value="2"
-                                 label="Home2"
-                                 route=""/>
-                            <Tab style={styles.tab} value="2"
-                                 label="Home2"
-                                 route=""/>
+                                 route="/home"/>
 			            </Tabs> 
 		            </div> 
 	            </Paper> 
@@ -138,8 +137,8 @@ var Master = React.createClass({
   },
 
   _handleTabChange: function(value, e, tab) {
-    // this.props.history.pushState(null, tab.props.route);
-    // this.setState({tabIndex: this._getSelectedIndex()});
+    this.props.history.pushState(null, tab.props.route);
+    this.setState({tabIndex: tab.props.value});
   }
 });
 
