@@ -9,6 +9,7 @@ var Mixins = MaterialUi.Mixins;
 var StylePropable = Mixins.StylePropable;
 
 var Body = require('./body');
+var jsonDatas = require('../../../public/json/home');
 
 var Home = React.createClass({
 	mixins: [StylePropable],
@@ -41,13 +42,14 @@ var Home = React.createClass({
                 color: Colors.darkWhite,
                 fontWeight: Typography.fontWeightLight
             }
-        };
+        },
+            jsonData = jsonDatas[this.props.lang];
         return (
         	<Body style={styles.root}>
-				<img src="/public/img/logo.png" style={styles.logo} />
+				<img src={jsonData.logo} style={styles.logo} />
 				<div style={styles.tagline} >
-					<h1 style={styles.h1}>产品名称</h1>
-					<h2 style={styles.h2}>这是很叼的产品，主要靠想象！！！</h2>
+					<h1 style={styles.h1}>{jsonData.title}</h1>
+					<h2 style={styles.h2}>{jsonData.desc}</h2>
 				</div>
 			</Body>
         )

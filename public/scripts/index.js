@@ -52,7 +52,7 @@
 	var ReactRouter = __webpack_require__(160);
 	var Router = ReactRouter.Router;
 	var createHistory = __webpack_require__(163);
-	var injectTapEventPlugin = __webpack_require__(395);
+	var injectTapEventPlugin = __webpack_require__(399);
 
 	//Needed for onTouchTap
 	//Can go away when react 1.0 release
@@ -19669,8 +19669,8 @@
 
 	var Master = __webpack_require__(209);
 	var Home = __webpack_require__(273);
-	var Product = __webpack_require__(390);
-	var About = __webpack_require__(393);
+	var Product = __webpack_require__(391);
+	var About = __webpack_require__(396);
 
 	var AppRoutes = React.createElement(
 		Route,
@@ -24162,7 +24162,6 @@
 	var DefaultRawTheme = Styles.LightRawTheme;
 	var StylePropable = __webpack_require__(268).StylePropable;
 	var jsonDatas = __webpack_require__(272);
-	var jsonData = jsonDatas['zh_cn'];
 
 	var Master = React.createClass({
 	    displayName: 'Master',
@@ -24172,7 +24171,8 @@
 	        var muiTheme = ThemeManager.getMuiTheme(DefaultRawTheme);
 	        return {
 	            tabIndex: '1',
-	            muiTheme: muiTheme
+	            muiTheme: muiTheme,
+	            lang: 'zh_cn'
 	        };
 	    },
 	    childContextTypes: {
@@ -24184,12 +24184,13 @@
 	        };
 	    },
 	    render: function render() {
-	        var styles = this.getStyles();
+	        var styles = this.getStyles(),
+	            lang = this.state.lang;
 	        return React.createElement(
 	            AppCanvas,
 	            null,
 	            this._getTabs(),
-	            this.props.children,
+	            React.cloneElement(this.props.children, { lang: lang }),
 	            React.createElement(
 	                FullWidthSection,
 	                { style: styles.footer },
@@ -24247,6 +24248,7 @@
 	            }
 
 	        };
+	        var jsonData = jsonDatas[this.state.lang];
 	        var productIcon = React.createElement(
 	            EnhancedButton,
 	            { style: styles.svgLogoContainer, linkButton: true, href: '/#/home' },
@@ -29478,6 +29480,7 @@
 	var StylePropable = Mixins.StylePropable;
 
 	var Body = __webpack_require__(389);
+	var jsonDatas = __webpack_require__(390);
 
 	var Home = React.createClass({
 	    displayName: 'Home',
@@ -29512,23 +29515,24 @@
 	                color: Colors.darkWhite,
 	                fontWeight: Typography.fontWeightLight
 	            }
-	        };
+	        },
+	            jsonData = jsonDatas[this.props.lang];
 	        return React.createElement(
 	            Body,
 	            { style: styles.root },
-	            React.createElement('img', { src: '/public/img/logo.png', style: styles.logo }),
+	            React.createElement('img', { src: jsonData.logo, style: styles.logo }),
 	            React.createElement(
 	                'div',
 	                { style: styles.tagline },
 	                React.createElement(
 	                    'h1',
 	                    { style: styles.h1 },
-	                    '产品名称'
+	                    jsonData.title
 	                ),
 	                React.createElement(
 	                    'h2',
 	                    { style: styles.h2 },
-	                    '这是很叼的产品，主要靠想象！！！'
+	                    jsonData.desc
 	                )
 	            )
 	        );
@@ -48797,39 +48801,96 @@
 
 /***/ },
 /* 390 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = {
+	    zh_cn: {
+	        logo: '/public/img/logo.png',
+	        title: '产品名称',
+	        desc: '这是很叼的产品，主要靠想象！！！'
+	    },
+	    en: []
+	};
+
+/***/ },
+/* 391 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(1);
 	var Body = __webpack_require__(389);
-	var BodyContainer = __webpack_require__(391);
-	var ProductItem = __webpack_require__(392);
+	var BodyContainer = __webpack_require__(392);
+	var ProductItem = __webpack_require__(393);
+	var MaterialUi = __webpack_require__(274);
+
+	var Styles = MaterialUi.Styles;
+	var Colors = Styles.Colors;
+
+	var jsonTypes = __webpack_require__(394);
+	var jsonProducts = __webpack_require__(395);
 
 	var Product = React.createClass({
 		displayName: 'Product',
 
 		render: function render() {
 			var style = {
+				type: {
+					fontSize: 26,
+					color: Colors.cyan500
+				},
 				item: {
 					display: 'inline-block',
 					marginRight: '10px',
 					marginLeft: '10px',
 					marginBottom: '20px'
+				},
+				divider: {
+					borderStyle: 'none',
+					height: '2px',
+					marginTop: '2px',
+					marginBottom: '10px',
+					backgroundColor: Colors.cyan100
 				}
-			};
+			},
+			    jsonType = jsonTypes[this.props.lang],
+			    jsonProduct = jsonProducts[this.props.lang],
+			    bcJsx;
+
+			bcJsx = jsonType.map(function (typeItem) {
+				var products = jsonProduct[typeItem.id],
+				    typeJsx,
+				    productJsx;
+				if (products.length) {
+					typeJsx = React.createElement(
+						'div',
+						null,
+						React.createElement(
+							'span',
+							{ style: style.type },
+							typeItem.title
+						),
+						React.createElement('hr', { style: style.divider })
+					);
+					productJsx = products.map(function (productItem) {
+						return React.createElement(ProductItem, { style: style.item, item: productItem });
+					});
+
+					return [typeJsx, productJsx];
+				}
+
+				return;
+			});
+
 			return React.createElement(
 				Body,
 				null,
 				React.createElement(
 					BodyContainer,
 					null,
-					React.createElement(ProductItem, { style: style.item }),
-					React.createElement(ProductItem, { style: style.item }),
-					React.createElement(ProductItem, { style: style.item }),
-					React.createElement(ProductItem, { style: style.item }),
-					React.createElement(ProductItem, { style: style.item }),
-					React.createElement(ProductItem, { style: style.item })
+					bcJsx
 				)
 			);
 		}
@@ -48838,7 +48899,7 @@
 	module.exports = Product;
 
 /***/ },
-/* 391 */
+/* 392 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -48869,7 +48930,7 @@
 	module.exports = bodyContainer;
 
 /***/ },
-/* 392 */
+/* 393 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -48891,7 +48952,7 @@
 				React.createElement(
 					CardMedia,
 					null,
-					React.createElement('img', { style: style.img, src: '/public/img/product/example.jpg' })
+					React.createElement('img', { style: style.img, src: this.props.item.pic })
 				),
 				React.createElement(
 					'div',
@@ -48899,27 +48960,27 @@
 					React.createElement(
 						'span',
 						{ style: style.descTitle },
-						'名称吊炸天'
+						this.props.item.title
 					),
 					React.createElement(
 						'span',
 						{ style: style.descPrice },
-						'编号:052'
+						this.props.item.id
 					),
 					React.createElement(
 						'span',
 						{ style: style.descPrice },
-						'大小:40*40*27'
+						this.props.item.size
 					),
 					React.createElement(
 						'span',
 						{ style: style.descPrice },
-						'￥13.5 (SSS)'
+						this.props.item.sPrice
 					),
 					React.createElement(
 						'span',
 						{ style: style.descPrice },
-						'￥16.0 (MIRROR)'
+						this.props.item.mPrice
 					)
 				)
 			);
@@ -48951,27 +49012,144 @@
 	module.exports = ProductItem;
 
 /***/ },
-/* 393 */
+/* 394 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = {
+	    zh_cn: [{
+	        id: 'GC',
+	        title: '玻璃夹'
+	    }, {
+	        id: 'GDH',
+	        title: '玻璃门拉手'
+	    }, {
+	        id: 'GPH',
+	        title: '隔断码'
+	    }, {
+	        id: 'PTC',
+	        title: '管连接件'
+	    }, {
+	        id: 'PH',
+	        title: '拉杆'
+	    }, {
+	        id: 'HB',
+	        title: '连接件'
+	    }, {
+	        id: 'FS',
+	        title: '泳池夹'
+	    }, {
+	        id: 'SH',
+	        title: '浴室夹'
+	    }],
+	    en: [{
+	        id: 'GC',
+	        title: '玻璃夹'
+	    }, {
+	        id: 'GDH',
+	        title: '玻璃门拉手'
+	    }, {
+	        id: 'GPH',
+	        title: '隔断码'
+	    }, {
+	        id: 'PTC',
+	        title: '管连接件'
+	    }, {
+	        id: 'PH',
+	        title: '拉杆'
+	    }, {
+	        id: 'HB',
+	        title: '连接件'
+	    }, {
+	        id: 'FS',
+	        title: '泳池夹'
+	    }, {
+	        id: 'SH',
+	        title: '浴室夹'
+	    }]
+	}; //['GC', 'GDH', 'GPH', 'PTC', 'PH', 'HB', 'FS', 'SH']
+
+/***/ },
+/* 395 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = {
+	    zh_cn: {
+	        'GC': [{
+	            pic: '/public/img/product/example.jpg',
+	            title: '名称吊炸天',
+	            id: '编号:052',
+	            size: '大小:40*40*27',
+	            sPrice: '￥13.5 (SSS)',
+	            mPrice: '￥16.0 (MIRROR)'
+	        }, {
+	            pic: '/public/img/product/example.jpg',
+	            title: '名称吊炸天',
+	            id: '编号:052',
+	            size: '大小:40*40*27',
+	            sPrice: '￥13.5 (SSS)',
+	            mPrice: '￥16.0 (MIRROR)'
+	        }, {
+	            pic: '/public/img/product/example.jpg',
+	            title: '名称吊炸天',
+	            id: '编号:052',
+	            size: '大小:40*40*27',
+	            sPrice: '￥13.5 (SSS)',
+	            mPrice: '￥16.0 (MIRROR)'
+	        }],
+	        'GDH': [{
+	            pic: '/public/img/product/example.jpg',
+	            title: '名称吊炸天',
+	            id: '编号:052',
+	            size: '大小:40*40*27',
+	            sPrice: '￥13.5 (SSS)',
+	            mPrice: '￥16.0 (MIRROR)'
+	        }, {
+	            pic: '/public/img/product/example.jpg',
+	            title: '名称吊炸天',
+	            id: '编号:052',
+	            size: '大小:40*40*27',
+	            sPrice: '￥13.5 (SSS)',
+	            mPrice: '￥16.0 (MIRROR)'
+	        }],
+	        'GPH': [],
+	        'PTC': [],
+	        'PH': [],
+	        'HB': [],
+	        'FS': [],
+	        'SH': []
+	    },
+	    en: []
+	};
+
+/***/ },
+/* 396 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(1);
 	var Body = __webpack_require__(389);
-	var BodyContainer = __webpack_require__(391);
-	var AboutContent = __webpack_require__(394);
+	var BodyContainer = __webpack_require__(392);
+	var AboutContent = __webpack_require__(397);
+
+	var jsonDatas = __webpack_require__(398);
 
 	var About = React.createClass({
 		displayName: 'About',
 
 		render: function render() {
+			var jsonData = jsonDatas[this.props.lang];
 			return React.createElement(
 				Body,
 				null,
 				React.createElement(
 					BodyContainer,
 					null,
-					React.createElement(AboutContent, null)
+					React.createElement(AboutContent, { jsonData: jsonData })
 				)
 			);
 		}
@@ -48980,7 +49158,7 @@
 	module.exports = About;
 
 /***/ },
-/* 394 */
+/* 397 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -48990,28 +49168,33 @@
 	var CardMedia = __webpack_require__(305);
 	var CardTitle = __webpack_require__(307);
 	var CardText = __webpack_require__(306);
+	var Colors = __webpack_require__(230);
 
 	var AboutContent = React.createClass({
 		displayName: 'AboutContent',
 
 		render: function render() {
+			var style = {
+				text: {
+					fontSize: 16,
+					color: Colors.lightBlack
+				}
+			},
+			    textJsx = this.props.jsonData.desc.map(function (text) {
+				return React.createElement(
+					'p',
+					{ style: style.text },
+					text
+				);
+			});
 			return React.createElement(
 				Card,
 				null,
-				React.createElement(CardTitle, { title: '关于我们' }),
+				React.createElement(CardTitle, { title: this.props.jsonData.title }),
 				React.createElement(
 					CardText,
 					null,
-					React.createElement(
-						'p',
-						null,
-						'要怎么介绍我们呢？？？要怎么介绍我们呢？？？要怎么介绍我们呢？？？要怎么介绍我们呢？？？要怎么介绍我们呢？？？要怎么介绍我们呢？？？要怎么介绍我们呢？？？要怎么介绍我们呢？？？要怎么介绍我们呢？？？要怎么介绍我们呢？？？要怎么介绍我们呢？？？要怎么介绍我们呢？？？要怎么介绍我们呢？？？要怎么介绍我们呢？？？要怎么介绍我们呢？？？要怎么介绍我们呢？？？'
-					),
-					React.createElement(
-						'p',
-						null,
-						'简单一点形容就一个字【叼】！'
-					)
+					textJsx
 				)
 			);
 		}
@@ -49020,18 +49203,32 @@
 	module.exports = AboutContent;
 
 /***/ },
-/* 395 */
+/* 398 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = {
+	    zh_cn: {
+	        title: '关于我们',
+	        desc: ['要怎么介绍我们呢？？？要怎么介绍我们呢？？？要怎么介绍我们呢？？？要怎么介绍我们呢？？？要怎么介绍我们呢？？？要怎么介绍我们呢？？？要怎么介绍我们呢？？？要怎么介绍我们呢？？？要怎么介绍我们呢？？？要怎么介绍我们呢？？？要怎么介绍我们呢？？？要怎么介绍我们呢？？？要怎么介绍我们呢？？？要怎么介绍我们呢？？？要怎么介绍我们呢？？？要怎么介绍我们呢？？？', '简单一点形容就一个字【叼】！', '简单一点形容就一个字【叼】！']
+	    },
+	    en: []
+	};
+
+/***/ },
+/* 399 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function injectTapEventPlugin () {
 	  __webpack_require__(31).injection.injectEventPluginsByName({
-	    "TapEventPlugin":       __webpack_require__(396)
+	    "TapEventPlugin":       __webpack_require__(400)
 	  });
 	};
 
 
 /***/ },
-/* 396 */
+/* 400 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -49059,10 +49256,10 @@
 	var EventPluginUtils = __webpack_require__(33);
 	var EventPropagators = __webpack_require__(73);
 	var SyntheticUIEvent = __webpack_require__(87);
-	var TouchEventUtils = __webpack_require__(397);
+	var TouchEventUtils = __webpack_require__(401);
 	var ViewportMetrics = __webpack_require__(38);
 
-	var keyOf = __webpack_require__(398);
+	var keyOf = __webpack_require__(402);
 	var topLevelTypes = EventConstants.topLevelTypes;
 
 	var isStartish = EventPluginUtils.isStartish;
@@ -49206,7 +49403,7 @@
 
 
 /***/ },
-/* 397 */
+/* 401 */
 /***/ function(module, exports) {
 
 	/**
@@ -49254,7 +49451,7 @@
 
 
 /***/ },
-/* 398 */
+/* 402 */
 /***/ function(module, exports) {
 
 	/**

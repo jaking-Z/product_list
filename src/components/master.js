@@ -15,7 +15,6 @@ var ThemeManager = Styles.ThemeManager;
 var DefaultRawTheme = Styles.LightRawTheme;
 var StylePropable = require('material-ui/lib/mixins').StylePropable;
 var jsonDatas = require('../../public/json/master');
-var jsonData = jsonDatas['zh_cn'];
 
 var Master = React.createClass({
 	mixins: [StylePropable],
@@ -23,7 +22,8 @@ var Master = React.createClass({
     	var muiTheme = ThemeManager.getMuiTheme(DefaultRawTheme);
         return {
             tabIndex: '1',
-            muiTheme: muiTheme
+            muiTheme: muiTheme,
+            lang: 'zh_cn'
         };
     },
     childContextTypes : {
@@ -35,10 +35,11 @@ var Master = React.createClass({
         };
     },
     render: function() {
-        var styles = this.getStyles();
+        var styles = this.getStyles(),
+            lang = this.state.lang;
         return ( <AppCanvas> 
 		        	{this._getTabs()} 
-		        	{this.props.children} 
+		        	{React.cloneElement(this.props.children, {lang: lang})} 
 		        	<FullWidthSection style={styles.footer}>
 			            <p style={this.prepareStyles(styles.p)}> 联系我们 </p> 
 		            </FullWidthSection> 
@@ -91,6 +92,7 @@ var Master = React.createClass({
             }
 
         };
+        var jsonData = jsonDatas[this.state.lang];
         var productIcon = ( 
         	<EnhancedButton style={styles.svgLogoContainer} linkButton={true} href="/#/home">
 	            <img style={this.prepareStyles(styles.svgLogo)} src={jsonData.navLogo.img} />

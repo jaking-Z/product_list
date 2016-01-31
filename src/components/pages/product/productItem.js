@@ -10,14 +10,14 @@ var ProductItem = React.createClass({
 		return (
 			<Card style={this.props.style}>
 				<CardMedia>
-					<img style={style.img} src="/public/img/product/example.jpg"/>
+					<img style={style.img} src={this.props.item.pic}/>
 				</CardMedia>
 				<div style={style.desc}>
-					<span style={style.descTitle}>名称吊炸天</span>
-					<span style={style.descPrice}>编号:052</span>
-					<span style={style.descPrice}>大小:40*40*27</span>
-					<span style={style.descPrice}>￥13.5 (SSS)</span>
-					<span style={style.descPrice}>￥16.0 (MIRROR)</span>
+					<span style={style.descTitle}>{this.props.item.title}</span>
+					<span style={style.descPrice}>{this.props.item.id}</span>
+					<span style={style.descPrice}>{this.props.item.size}</span>
+					<span style={style.descPrice}>{this.props.item.sPrice}</span>
+					<span style={style.descPrice}>{this.props.item.mPrice}</span>
 				</div>
 			</Card>
 			);
